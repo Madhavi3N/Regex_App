@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Mail validation</title>
+    <style>
+        body {
+            background-color: lightslategray;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .form-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        h1 {
+            color: rgb(0, 0, 0);
+        }
+        .form-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        input[type="text"],
+        textarea {
+            background-color: #c0e8f6;
+            color: #efefef;
+            border: none;
+            padding: 5px;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+        input[type="submit"],
+        input[type="button"] {
+            background-color: #06795b;
+            color: #fffeff;
+            padding: 5px 15px;
+            border: none;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        input[type="submit"]:hover,
+        input[type="button"]:hover {
+            background-color: #06795b;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="left">
+        <h1>Email Validation</h1>
+        <div>
+            <label for="email">Email Address:</label><br>
+            <input type="text" id="email" name="email" placeholder="Enter email address"><br><br>
+            <input type="button" value="Validate Email" onclick="validateEmail()">
+            <div id="validation-result"></div>
+        </div>
+
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <a href="/index" class="btn" target="_blank"><h2>Regex Matcher page</h2></a>
+        <br><br>
+        <a href="/" class="btn" target="_blank"><h2>Home</h2></a>
+
+    </div>
+
+    <script>
+        function validateEmail() {
+            var email = document.getElementById('email').value;
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/validate-email', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    document.getElementById('validation-result').innerText = response.result_message;
+                }
+            };
+            xhr.send('email=' + encodeURIComponent(email));
+        }
+    </script>
+</body>
+</html>
